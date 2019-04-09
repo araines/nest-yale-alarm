@@ -1,0 +1,31 @@
+{
+  "name": "nest-yale-alarm",
+  "description": "Project to set Nest Home/Away status when Yale Smart Home Alarm is armed/disarmed.",
+  "version": "1.0.0",
+  "main": "src/handlers.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/araines/nest-yale-alarm.git"
+  },
+  "keywords": [
+    "nest",
+    "yale"
+  ],
+  "author": "Andy Raines <andrew.raines@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/araines/nest-yale-alarm/issues"
+  },
+  "homepage": "https://github.com/araines/nest-yale-alarm#readme",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.437.0",
+    "serverless": "^1.40.0"
+  }
+}
