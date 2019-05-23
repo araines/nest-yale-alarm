@@ -1,87 +1,56 @@
-const request = require("request-promise");
+const request = require("request-promise-native");
 
 const ARMED = "arm";
 const PART_ARMED = "home";
 const DISARMED = "disarm";
 
 const urls = {
-  login: "https://www.yalehomesystem.co.uk/homeportal/api/login/check_login",
-  logout: "https://www.yalehomesystem.co.uk/homeportal/api/logout",
-  getStatus:
-    "https://www.yalehomesystem.co.uk/homeportal/api/panel/get_panel_mode",
-  setState:
-    "https://www.yalehomesystem.co.uk/homeportal/api/panel/set_panel_mode?area=1&mode="
+  token: "https://mob.yalehomesystem.co.uk/yapi/o/token/",
+  getStatus: "https://mob.yalehomesystem.co.uk/yapi/api/panel/mode/"
 };
+const AUTH_TOKEN =
+  "VnVWWDZYVjlXSUNzVHJhcUVpdVNCUHBwZ3ZPakxUeXNsRU1LUHBjdTpkd3RPbE15WEtENUJ5ZW1GWHV0am55eGhrc0U3V0ZFY2p0dFcyOXRaSWNuWHlSWHFsWVBEZ1BSZE1xczF4R3VwVTlxa1o4UE5ubGlQanY5Z2hBZFFtMHpsM0h4V3dlS0ZBcGZzakpMcW1GMm1HR1lXRlpad01MRkw3MGR0bmNndQ==";
 
 const getSession = async (username, password) => {
-  const cookieJar = request.jar();
   const opts = {
-    uri: urls.login,
-    jar: cookieJar,
+    uri: urls.token,
+    headers: {
+      Authorization: `Basic ${AUTH_TOKEN}`
+    },
     form: {
-      id: username,
-      password
+      username,
+      password,
+      grant_type: "password"
     },
     method: "POST",
     json: true
   };
   const response = await request(opts);
 
-  if (response.result !== "1") {
+  if (!response.access_token) {
     throw "Incorrect account details provided";
   }
 
-  return {
-    username,
-    password,
-    cookieJar
-  };
-};
-
-const endSession = async session => {
-  const opts = {
-    uri: urls.logout,
-    jar: session.cookieJar,
-    method: "POST"
-  };
-  await request(opts);
+  return response;
 };
 
 const getStatus = async session => {
   const opts = {
     uri: urls.getStatus,
-    jar: session.cookieJar,
-    form: {
-      id: session.username,
-      password: session.password
+    headers: {
+      Authorization: `Bearer ${session.access_token}`
     },
-    method: "POST",
+    method: "GET",
     json: true
   };
   const response = await request(opts);
 
-  if (response.result !== "1") {
-    throw "Unable to get status";
-  }
-
-  return response.message[0].mode;
-};
-
-const setState = async (session, state) => {
-  const opts = {
-    uri: urls.setState + state,
-    jar: session.cookieJar,
-    method: "POST",
-    json: true
-  };
-  await request(opts);
+  return response.data[0].mode;
 };
 
 module.exports = {
   getSession,
-  endSession,
   getStatus,
-  setState,
   ARMED,
   PART_ARMED,
   DISARMED

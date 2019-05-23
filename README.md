@@ -58,3 +58,13 @@ yarn
 ```
 sls deploy
 ```
+
+## Development
+
+### Testing
+
+Run tests:
+
+```
+yarn test
+```

@@ -22,10 +22,12 @@
   "homepage": "https://github.com/araines/nest-yale-alarm#readme",
   "dependencies": {
     "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise-native": "^1.0.7"
   },
   "devDependencies": {
     "aws-sdk": "^2.437.0",
+    "aws-sdk-mock": "^4.4.0",
+    "jest": "^24.7.1",
     "serverless": "^1.40.0"
   }
 }

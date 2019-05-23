@@ -18,22 +18,26 @@ const update = async (event, context) => {
   const state = nest.getState(auth.nestToken, await structure);
 
   log(`Status received - Yale: ${await status} Nest: ${await state}`);
-  let resp;
-  if (
-    [yale.ARMED, yale.PART_ARMED].includes(await status) &&
-    (await state) === nest.HOME
-  ) {
+  if (shouldSetAway(await status, await state)) {
     log("Setting AWAY");
-    resp = nest.setAway(auth.nestToken, structure);
-  } else if ((await status) === yale.DISARMED && (await state) === nest.AWAY) {
+    nest.setAway(auth.nestToken, structure);
+  } else if (shouldSetHome(await status, await state)) {
     log("Setting HOME");
-    resp = nest.setHome(auth.nestToken, structure);
+    nest.setHome(auth.nestToken, structure);
   } else {
     log("No action required");
   }
+};
 
-  log("Logging out");
-  yale.endSession(session);
+const shouldSetAway = (yaleStatus, nestState) => {
+  return (
+    [yale.ARMED, yale.PART_ARMED].includes(yaleStatus) &&
+    nest.HOME === nestState
+  );
+};
+
+const shouldSetHome = (yaleStatus, nestState) => {
+  return yale.DISARMED === yaleStatus && nest.AWAY === nestState;
 };
 
 module.exports = {
