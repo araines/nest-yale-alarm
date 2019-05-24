@@ -20,10 +20,10 @@ const update = async (event, context) => {
   log(`Status received - Yale: ${await status} Nest: ${await state}`);
   if (shouldSetAway(await status, await state)) {
     log("Setting AWAY");
-    nest.setAway(auth.nestToken, structure);
+    await nest.setAway(auth.nestToken, await structure);
   } else if (shouldSetHome(await status, await state)) {
     log("Setting HOME");
-    nest.setHome(auth.nestToken, structure);
+    await nest.setHome(auth.nestToken, await structure);
   } else {
     log("No action required");
   }
