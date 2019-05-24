@@ -1,0 +1,18 @@
+service: nest-yale-alarm
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: prod
+  region: eu-west-1
+  memorySize: 128
+  timeout: 10
+  logRetentionInDays: 7
+  iamManagedPolicies:
+    - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+
+functions:
+  update:
+    handler: src/handlers.update
+    events:
+      - schedule: rate(5 minutes)
