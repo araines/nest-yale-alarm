@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "src/handlers.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "deploy": "sls deploy"
   },
   "repository": {
     "type": "git",
