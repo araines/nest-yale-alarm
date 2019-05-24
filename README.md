@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/araines/nest-yale-alarm.svg?style=shield)](https://circleci.com/gh/araines/nest-yale-alarm)
+
 # nest-yale-alarm
 
 Project to set Nest Home/Away status when Yale Smart Home Alarm is armed/disarmed.
