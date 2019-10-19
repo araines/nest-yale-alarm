@@ -2,7 +2,7 @@ service: nest-yale-alarm
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   stage: prod
   region: eu-west-1
   memorySize: 128
