@@ -10,6 +10,7 @@ provider:
   logRetentionInDays: 7
   iamManagedPolicies:
     - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+    - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
 functions:
   update:
