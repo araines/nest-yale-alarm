@@ -26,6 +26,8 @@ jobs:
       - restore_cache:
           keys:
             - v1-nest-yale-alarm-{{ checksum "yarn.lock" }}
+            - v1-nest-yale-alarm-
+      - run: yarn install
       - run: yarn deploy
 
 workflows:
